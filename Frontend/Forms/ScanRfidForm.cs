@@ -67,9 +67,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                         RFIDTextBox.Clear();
                         return;
                     }
-
-                    // If duration is valid (> 0), proceed
-                    MessageBox.Show("RFID authenticated successfully.");
                     RFIDTextBox.Clear();
 
                     var TRForm = new TimeRemainingForm();
