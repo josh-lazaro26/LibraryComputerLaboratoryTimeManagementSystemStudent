@@ -6,10 +6,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services
     public static class ApiConfig
     {
         public static string Token { get; set; }
-
-        public static readonly HttpClient Client = new HttpClient
+        public static readonly HttpClient Client = new HttpClient(new HttpClientHandler
         {
-            BaseAddress = new Uri("https://library-laboratory-management-system.onrender.com")
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        })
+        {
+            BaseAddress = new Uri("https://192.168.8.4:7128")
         };
     }
 }
