@@ -17,7 +17,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
         private System.Windows.Forms.Timer _countdownTimer;
         private int _remainingSeconds;
         private StudentServices _studentServices;
-        //New
+
+        private bool _notificationShown = false;
+
         private int _sessionId;
 
         private readonly SignalRService _signalRService;
@@ -143,7 +145,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             {
                 _remainingSeconds--;
                 UpdateTimeLabel();
-
+                // Show notification modal when 10 minutes and 30 seconds remaining
+                if (_remainingSeconds == 630 && !_notificationShown)
+                {
+                    _notificationShown = true; // Prevent showing it multiple times
+                    var notificationModal = new NoticationModalForm();
+                    notificationModal.Show();
+                }
             }
             else
             {

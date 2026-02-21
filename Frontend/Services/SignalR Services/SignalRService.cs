@@ -23,7 +23,7 @@ internal class SignalRService
     public async Task InitializeAsync()
     {
         _connection = new HubConnectionBuilder()
-            .WithUrl("https://192.168.8.4:7128/api/v1/hubs/session", options =>
+            .WithUrl("https://library-laboratory-management-system.onrender.com/api/v1/hubs/session", options =>
             {
                 options.AccessTokenProvider = _tokenProvider;
                 options.HttpMessageHandlerFactory = _ => new HttpClientHandler

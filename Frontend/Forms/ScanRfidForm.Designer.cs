@@ -28,45 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanRfidForm));
-            this.AdminRFIDScan = new System.Windows.Forms.Label();
-            this.l = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.AdminRFIDScanLabel = new System.Windows.Forms.Label();
+            this.HeaderLabel = new System.Windows.Forms.Label();
+            this.NDTCLibraryPb = new System.Windows.Forms.PictureBox();
             this.RFIDTextBox = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.ScanRfidFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.NDTCLibraryPb)).BeginInit();
             this.SuspendLayout();
             // 
-            // AdminRFIDScan
+            // AdminRFIDScanLabel
             // 
-            this.AdminRFIDScan.AutoSize = true;
-            this.AdminRFIDScan.Font = new System.Drawing.Font("Roboto SemiBold", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdminRFIDScan.ForeColor = System.Drawing.Color.White;
-            this.AdminRFIDScan.Location = new System.Drawing.Point(182, 417);
-            this.AdminRFIDScan.Name = "AdminRFIDScan";
-            this.AdminRFIDScan.Size = new System.Drawing.Size(652, 58);
-            this.AdminRFIDScan.TabIndex = 6;
-            this.AdminRFIDScan.Text = "Tap Student RFID to continue";
+            this.AdminRFIDScanLabel.AutoSize = true;
+            this.AdminRFIDScanLabel.Font = new System.Drawing.Font("Roboto SemiBold", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AdminRFIDScanLabel.ForeColor = System.Drawing.Color.White;
+            this.AdminRFIDScanLabel.Location = new System.Drawing.Point(182, 417);
+            this.AdminRFIDScanLabel.Name = "AdminRFIDScanLabel";
+            this.AdminRFIDScanLabel.Size = new System.Drawing.Size(652, 58);
+            this.AdminRFIDScanLabel.TabIndex = 6;
+            this.AdminRFIDScanLabel.Text = "Tap Student RFID to continue";
             // 
-            // l
+            // HeaderLabel
             // 
-            this.l.AutoSize = true;
-            this.l.Font = new System.Drawing.Font("Inter Light", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l.ForeColor = System.Drawing.Color.White;
-            this.l.Location = new System.Drawing.Point(257, 123);
-            this.l.Name = "l";
-            this.l.Size = new System.Drawing.Size(564, 136);
-            this.l.TabIndex = 5;
-            this.l.Text = "Library Laboratory Time\r\n Management  System";
+            this.HeaderLabel.AutoSize = true;
+            this.HeaderLabel.Font = new System.Drawing.Font("Inter Light", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HeaderLabel.ForeColor = System.Drawing.Color.White;
+            this.HeaderLabel.Location = new System.Drawing.Point(257, 123);
+            this.HeaderLabel.Name = "HeaderLabel";
+            this.HeaderLabel.Size = new System.Drawing.Size(564, 136);
+            this.HeaderLabel.TabIndex = 5;
+            this.HeaderLabel.Text = "Library Laboratory Time\r\n Management  System";
             // 
-            // pictureBox1
+            // NDTCLibraryPb
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(65, 110);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(186, 179);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.NDTCLibraryPb.Image = ((System.Drawing.Image)(resources.GetObject("NDTCLibraryPb.Image")));
+            this.NDTCLibraryPb.Location = new System.Drawing.Point(65, 110);
+            this.NDTCLibraryPb.Name = "NDTCLibraryPb";
+            this.NDTCLibraryPb.Size = new System.Drawing.Size(186, 179);
+            this.NDTCLibraryPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.NDTCLibraryPb.TabIndex = 4;
+            this.NDTCLibraryPb.TabStop = false;
             // 
             // RFIDTextBox
             // 
@@ -76,20 +78,27 @@
             this.RFIDTextBox.TabIndex = 7;
             this.RFIDTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RFIDTextBox_KeyDown);
             // 
+            // ScanRfidFormElipse
+            // 
+            this.ScanRfidFormElipse.ElipseRadius = 0;
+            this.ScanRfidFormElipse.TargetControl = this;
+            // 
             // ScanRfidForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.ClientSize = new System.Drawing.Size(930, 625);
-            this.Controls.Add(this.AdminRFIDScan);
-            this.Controls.Add(this.l);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.AdminRFIDScanLabel);
+            this.Controls.Add(this.HeaderLabel);
+            this.Controls.Add(this.NDTCLibraryPb);
             this.Controls.Add(this.RFIDTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ScanRfidForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScanRfidForm_FormClosing);
+            this.Load += new System.EventHandler(this.ScanRfidForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.NDTCLibraryPb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,9 +106,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label AdminRFIDScan;
-        private System.Windows.Forms.Label l;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label AdminRFIDScanLabel;
+        private System.Windows.Forms.Label HeaderLabel;
+        private System.Windows.Forms.PictureBox NDTCLibraryPb;
         private System.Windows.Forms.TextBox RFIDTextBox;
+        private Bunifu.Framework.UI.BunifuElipse ScanRfidFormElipse;
     }
 }

@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.FullNameLabel = new System.Windows.Forms.Label();
             this.CourseLabel = new System.Windows.Forms.Label();
             this.CurrentDateLabel = new System.Windows.Forms.Label();
             this.StudentTimeLabel = new System.Windows.Forms.Label();
             this.TerminateSessionBtn = new System.Windows.Forms.Button();
+            this.TimeRemainingFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.TerminateSessionBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.SuspendLayout();
             // 
             // FullNameLabel
@@ -94,6 +97,16 @@
             this.TerminateSessionBtn.UseVisualStyleBackColor = false;
             this.TerminateSessionBtn.Click += new System.EventHandler(this.TerminateSessionBtn_Click);
             // 
+            // TimeRemainingFormElipse
+            // 
+            this.TimeRemainingFormElipse.ElipseRadius = 10;
+            this.TimeRemainingFormElipse.TargetControl = this;
+            // 
+            // TerminateSessionBtnElipse
+            // 
+            this.TerminateSessionBtnElipse.ElipseRadius = 5;
+            this.TerminateSessionBtnElipse.TargetControl = this.TerminateSessionBtn;
+            // 
             // TimeRemainingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,5 +134,7 @@
         private System.Windows.Forms.Label CurrentDateLabel;
         private System.Windows.Forms.Label StudentTimeLabel;
         private System.Windows.Forms.Button TerminateSessionBtn;
+        private Bunifu.Framework.UI.BunifuElipse TimeRemainingFormElipse;
+        private Bunifu.Framework.UI.BunifuElipse TerminateSessionBtnElipse;
     }
 }

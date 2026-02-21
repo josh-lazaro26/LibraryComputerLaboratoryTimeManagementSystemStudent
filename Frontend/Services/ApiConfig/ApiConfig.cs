@@ -11,7 +11,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
         })
         {
-            BaseAddress = new Uri("https://192.168.8.4:7128")
+            BaseAddress = new Uri("https://library-laboratory-management-system.onrender.com")
         };
     }
 }
