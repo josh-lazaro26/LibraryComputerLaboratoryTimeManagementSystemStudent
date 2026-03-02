@@ -9,9 +9,10 @@ internal class SignalRService
     private HubConnection _connection;
     private readonly Func<Task<string>> _tokenProvider;
 
+    // Student listeners (matching hub events from image)
     public event Action DisconnectUser;
-
-    public event Action<TimeSpan> UpdatedStudentSession;
+    public event Action<TimeSpan> UpdatedStudentSession;  // hub: "UpdatedSession"
+    public event Action Terminate;                         // hub: "Terminate"
 
     public SignalRService(Func<Task<string>> tokenProvider)
     {
@@ -23,7 +24,7 @@ internal class SignalRService
     public async Task InitializeAsync()
     {
         _connection = new HubConnectionBuilder()
-            .WithUrl("https://library-laboratory-management-system.onrender.com/api/v1/hubs/session", options =>
+            .WithUrl("https://internet-laboratory-time-management.onrender.com/api/v1/hubs/session", options =>
             {
                 options.AccessTokenProvider = _tokenProvider;
                 options.HttpMessageHandlerFactory = _ => new HttpClientHandler
@@ -33,23 +34,30 @@ internal class SignalRService
             })
             .WithAutomaticReconnect()
             .Build();
+
         RegisterHandlers();
         await _connection.StartAsync();
     }
-    public HubConnection GetHubConnection()
-    {
-        return _connection;
-    }
+
+    public HubConnection GetHubConnection() => _connection;
+
     public void RegisterHandlers()
     {
         _connection.On("DisconnectUser", () =>
         {
-            DisconnectUser.Invoke();
+            DisconnectUser?.Invoke();  
         });
-        _connection.On("UpdateStudentSession", (TimeSpan UpdatedStudentSessions) =>
+
+        _connection.On<TimeSpan>("UpdatedSession", (duration) =>
         {
-            UpdatedStudentSession.Invoke(UpdatedStudentSessions);
+            UpdatedStudentSession?.Invoke(duration);
         });
-        Console.WriteLine("User Disconnected");
+
+        _connection.On("Terminate", () =>
+        {
+            Terminate?.Invoke();
+        });
+
+        Console.WriteLine("SignalR handlers registered.");
     }
 }

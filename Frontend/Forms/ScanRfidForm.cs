@@ -1,9 +1,8 @@
-﻿using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services;
-using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.StudentServices;
+﻿using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.StudentServices;
+using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Models.StudentDao;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
@@ -43,7 +42,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             InitializeComponent();
             _studentServices = new StudentServices();
             this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
+            //this.WindowState = FormWindowState.Maximized;
             this.TopMost = true;
             this.FormClosing += ScanRfidForm_FormClosing;
             this.Shown += (s, e) => RFIDTextBox.Focus();
@@ -116,18 +115,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                 bool success = await _studentServices.AuthenticateByRfidAsync(rfid);
                 if (success)
                 {
-                    // NEW: Get student info to check duration
-                    var json = await _studentServices.GetCurrentStudentAsync();
-                    var obj = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-                    if (!(bool)obj["isSuccess"])
-                    {
-                        MessageBox.Show("Failed to load student info.");
-                        return;
-                    }
-
-                    var student = obj["value"];
-                    string durationStr = student["duration"]?.ToString();
+                    string durationStr = StudentDao.Duration;
 
                     if (string.IsNullOrWhiteSpace(durationStr) ||
                         !TimeSpan.TryParse(durationStr, out TimeSpan duration) ||
@@ -137,21 +125,17 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                         RFIDTextBox.Clear();
                         return;
                     }
-                    RFIDTextBox.Clear();
 
                     var TRForm = new TimeRemainingForm();
-
-                    TRForm.FormClosed += (_, __) =>
-                    {
-                        this.Close();
-                    };
-
+                    TRForm.FormClosed += (_, __) => this.Close();
+                    ClearRfidTb();
                     this.Hide();
                     TRForm.Show();
                 }
                 else
                 {
                     MessageBox.Show("RFID authentication failed.");
+                    ClearRfidTb();
                 }
             }
             catch (Exception ex)
@@ -170,12 +154,17 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             }
         }
 
+        private void ClearRfidTb()
+        {
+            RFIDTextBox.Clear();
+        }
+
         private void ScanRfidForm_Load(object sender, EventArgs e)
         {
-            var screen = Screen.PrimaryScreen;
-            ResponsiveLayout.Initialize(screen);
+            //var screen = Screen.PrimaryScreen;
+            //ResponsiveLayout.Initialize(screen);
 
-            ApplyResponsiveLayout(screen);
+            //ApplyResponsiveLayout(screen);
         }
 
         private void ApplyResponsiveLayout(Screen screen)

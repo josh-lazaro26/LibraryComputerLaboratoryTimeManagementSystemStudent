@@ -2,7 +2,8 @@
 {
     public static class StudentDao
     {
-        public static int StudentId { get; set; }
+        public static string Duration { get; set; }
+        public static string SchoolId { get; set; }
     }
 }
 

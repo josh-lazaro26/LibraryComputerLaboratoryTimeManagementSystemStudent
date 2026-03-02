@@ -62,6 +62,18 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                     UpdateTimeLabel();
                 }
             };
+
+            _signalRService.Terminate += () =>
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new Action(async () => await TerminateSession()));
+                }
+                else
+                {
+                    _ = TerminateSession();
+                }
+            };
         }
         private void InitializeCountdownTimer()
         {
@@ -82,34 +94,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                 Console.WriteLine(ex.ToString());
             }
         }
-        private async Task LoadStudentAsync()
+        private void LoadStudent()
         {
             try
             {
-                var json = await _studentServices.GetCurrentStudentAsync();
-                System.Diagnostics.Debug.WriteLine($"Student response: {json}");
+                string durationStr = StudentDao.Duration;
 
-                var obj = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-                if (!(bool)obj["isSuccess"])
-                {
-                    MessageBox.Show("Failed to load student info.");
-                    return;
-                }
-
-                var student = obj["value"];
-
-                string fullName = string.Join(" ",
-                    new[]
-                    {
-                student["firstName"]?.ToString(),
-                student["middleName"]?.ToString(),
-                student["lastName"]?.ToString()
-                    }
-                    .Where(x => !string.IsNullOrWhiteSpace(x))
-                );
-
-                string durationStr = student["duration"]?.ToString();
                 if (!string.IsNullOrWhiteSpace(durationStr) && TimeSpan.TryParse(durationStr, out TimeSpan duration))
                 {
                     int seconds = (int)duration.TotalSeconds;
@@ -122,14 +112,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                     this.Close();
                 }
 
-                //New
-                _sessionId = student["sessionId"]?.Value<int>() ?? 0;
-
-
-                FullNameLabel.Text = fullName;
-                CourseLabel.Text = student["course"]?.ToString();
                 CurrentDateLabel.Text = DateTime.Now.ToString("MMMM dd, yyyy");
-
+                SchoolIdLabel.Text = StudentDao.SchoolId ?? "N/A";
             }
             catch (Exception ex)
             {
@@ -169,18 +153,35 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
         private async void TerminateSessionBtn_Click(object sender, EventArgs e)
         {
-            await TerminateSession();
+            using (var dialog = new DialogForm("Logout", "Are you sure you want to logout?"))
+            {
+                if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
+                {
+                    var studentService = new StudentServices();
+                    bool success = await studentService.Logout();
+
+                    if (success)
+                    {
+                        var RfidForm = new ScanRfidForm();
+                        RfidForm.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Logout failed. Please try again.", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void UpdateTimeLabel()
         {
             StudentTimeLabel.Text = TimeSpan.FromSeconds(_remainingSeconds).ToString(@"hh\:mm\:ss");
         }
-
-        private async void TimeRemainingForm_Load(object sender, EventArgs e)
+        private void TimeRemainingForm_Load(object sender, EventArgs e)
         {
-            await LoadStudentAsync();
-            await _signalRService.InitializeAsync();
+            LoadStudent();
         }
 
         private async Task TerminateSession()

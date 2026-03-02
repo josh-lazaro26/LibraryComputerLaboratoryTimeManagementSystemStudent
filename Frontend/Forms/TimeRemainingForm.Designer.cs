@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.FullNameLabel = new System.Windows.Forms.Label();
-            this.CourseLabel = new System.Windows.Forms.Label();
+            this.SchoolIdLabel = new System.Windows.Forms.Label();
             this.CurrentDateLabel = new System.Windows.Forms.Label();
             this.StudentTimeLabel = new System.Windows.Forms.Label();
             this.TerminateSessionBtn = new System.Windows.Forms.Button();
@@ -38,38 +37,27 @@
             this.TerminateSessionBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.SuspendLayout();
             // 
-            // FullNameLabel
+            // SchoolIdLabel
             // 
-            this.FullNameLabel.AutoSize = true;
-            this.FullNameLabel.Font = new System.Drawing.Font("Roboto Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FullNameLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.FullNameLabel.Location = new System.Drawing.Point(13, 13);
-            this.FullNameLabel.Name = "FullNameLabel";
-            this.FullNameLabel.Size = new System.Drawing.Size(106, 25);
-            this.FullNameLabel.TabIndex = 0;
-            this.FullNameLabel.Text = "Full Name";
-            // 
-            // CourseLabel
-            // 
-            this.CourseLabel.AutoSize = true;
-            this.CourseLabel.Font = new System.Drawing.Font("Roboto Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CourseLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.CourseLabel.Location = new System.Drawing.Point(13, 50);
-            this.CourseLabel.Name = "CourseLabel";
-            this.CourseLabel.Size = new System.Drawing.Size(79, 25);
-            this.CourseLabel.TabIndex = 1;
-            this.CourseLabel.Text = "Course";
+            this.SchoolIdLabel.AutoSize = true;
+            this.SchoolIdLabel.Font = new System.Drawing.Font("Roboto Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SchoolIdLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.SchoolIdLabel.Location = new System.Drawing.Point(12, 31);
+            this.SchoolIdLabel.Name = "SchoolIdLabel";
+            this.SchoolIdLabel.Size = new System.Drawing.Size(106, 25);
+            this.SchoolIdLabel.TabIndex = 1;
+            this.SchoolIdLabel.Text = "School Id:";
             // 
             // CurrentDateLabel
             // 
             this.CurrentDateLabel.AutoSize = true;
             this.CurrentDateLabel.Font = new System.Drawing.Font("Roboto Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentDateLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.CurrentDateLabel.Location = new System.Drawing.Point(13, 86);
+            this.CurrentDateLabel.Location = new System.Drawing.Point(12, 67);
             this.CurrentDateLabel.Name = "CurrentDateLabel";
-            this.CurrentDateLabel.Size = new System.Drawing.Size(130, 25);
+            this.CurrentDateLabel.Size = new System.Drawing.Size(136, 25);
             this.CurrentDateLabel.TabIndex = 2;
-            this.CurrentDateLabel.Text = "Current Date";
+            this.CurrentDateLabel.Text = "Current Date:";
             // 
             // StudentTimeLabel
             // 
@@ -91,9 +79,9 @@
             this.TerminateSessionBtn.ForeColor = System.Drawing.SystemColors.Menu;
             this.TerminateSessionBtn.Location = new System.Drawing.Point(88, 187);
             this.TerminateSessionBtn.Name = "TerminateSessionBtn";
-            this.TerminateSessionBtn.Size = new System.Drawing.Size(208, 38);
+            this.TerminateSessionBtn.Size = new System.Drawing.Size(208, 51);
             this.TerminateSessionBtn.TabIndex = 4;
-            this.TerminateSessionBtn.Text = "Terminate";
+            this.TerminateSessionBtn.Text = "Logout";
             this.TerminateSessionBtn.UseVisualStyleBackColor = false;
             this.TerminateSessionBtn.Click += new System.EventHandler(this.TerminateSessionBtn_Click);
             // 
@@ -116,8 +104,7 @@
             this.Controls.Add(this.TerminateSessionBtn);
             this.Controls.Add(this.StudentTimeLabel);
             this.Controls.Add(this.CurrentDateLabel);
-            this.Controls.Add(this.CourseLabel);
-            this.Controls.Add(this.FullNameLabel);
+            this.Controls.Add(this.SchoolIdLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TimeRemainingForm";
             this.Text = "TimeRemainingForm";
@@ -128,9 +115,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label FullNameLabel;
-        private System.Windows.Forms.Label CourseLabel;
+        private System.Windows.Forms.Label SchoolIdLabel;
         private System.Windows.Forms.Label CurrentDateLabel;
         private System.Windows.Forms.Label StudentTimeLabel;
         private System.Windows.Forms.Button TerminateSessionBtn;
