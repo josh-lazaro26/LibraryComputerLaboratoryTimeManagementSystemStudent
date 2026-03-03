@@ -59,7 +59,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services
                     Console.WriteLine($"Logout failed: {response.StatusCode}");
                     return false;
                 }
-                ApiConfig.Token = null;
                 return true;
             }
             catch (Exception ex)

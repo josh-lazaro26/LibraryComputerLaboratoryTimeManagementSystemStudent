@@ -1,8 +1,10 @@
-﻿using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.StudentServices;
-using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Models.StudentDao;
+﻿using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Models.StudentDao;
+using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services;
+using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.StudentServices;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
@@ -53,12 +55,30 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             _proc = HookCallback;
             _hookId = SetHook(_proc);
 
+            if(ApiConfig.Token != null)
+            {
+                _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
+
+                SignalRInitialize();
+            }
+
             _signalRService.Restart += () =>
             {
                 Console.WriteLine($"This pc is restarting...");
             };
         }
-
+        private void SignalRInitialize()
+        {
+            try
+            {
+                _ = _signalRService.InitializeAsync();
+                Console.WriteLine("signalR initialized");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (var curProcess = System.Diagnostics.Process.GetCurrentProcess())
