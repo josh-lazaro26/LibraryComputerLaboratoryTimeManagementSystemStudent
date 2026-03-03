@@ -4,6 +4,9 @@
     {
         public static string Duration { get; set; }
         public static string SchoolId { get; set; }
+        public static string HasAnsweredToEvaluation { get; set; }
+
     }
+
 }
 

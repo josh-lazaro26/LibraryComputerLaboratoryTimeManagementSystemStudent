@@ -205,6 +205,12 @@
     <Compile Include="Frontend\Forms\DialogForm.Designer.cs">
       <DependentUpon>DialogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frontend\Forms\EvaluationAnswerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frontend\Forms\EvaluationAnswerForm.Designer.cs">
+      <DependentUpon>EvaluationAnswerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frontend\Forms\NoticationModalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +239,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\Forms\DialogForm.resx">
       <DependentUpon>DialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frontend\Forms\EvaluationAnswerForm.resx">
+      <DependentUpon>EvaluationAnswerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\Forms\NoticationModalForm.resx">
       <DependentUpon>NoticationModalForm.cs</DependentUpon>

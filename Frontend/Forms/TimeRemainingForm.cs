@@ -157,20 +157,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             {
                 if (dialog.ShowDialog(this) == DialogResult.OK && dialog.IsConfirmed)
                 {
-                    var studentService = new StudentServices();
-                    bool success = await studentService.Logout();
-
-                    if (success)
-                    {
-                        var RfidForm = new ScanRfidForm();
-                        RfidForm.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Logout failed. Please try again.", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    await HandleLogout();
                 }
             }
         }
@@ -195,13 +182,39 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                     await _signalRService.GetHubConnection().InvokeAsync("LogoutUser");
                 }
 
-                var scanRfidForm = new ScanRfidForm();
-                scanRfidForm.Show();
-                this.Close();
+                await HandleLogout();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine($"May mali yati {ex.Message}");
+            }
+        }
+        private async Task HandleLogout()
+        {
+            bool hasAnswered = string.Equals(
+                StudentDao.HasAnsweredToEvaluation,
+                "True",
+                StringComparison.OrdinalIgnoreCase);
+
+            if (!hasAnswered)
+            {
+                var evaluationForm = new EvaluationAnswerForm();
+                evaluationForm.ShowDialog(this); // Modal — blocks until closed
+            }
+
+            var studentService = new StudentServices();
+            bool success = await studentService.Logout();
+
+            if (success)
+            {
+                var rfidForm = new ScanRfidForm();
+                rfidForm.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Logout failed. Please try again.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
