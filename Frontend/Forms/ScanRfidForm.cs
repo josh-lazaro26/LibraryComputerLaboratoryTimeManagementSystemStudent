@@ -54,14 +54,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             // Start the keyboard hook
             _proc = HookCallback;
             _hookId = SetHook(_proc);
+            _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
 
-            if(ApiConfig.Token != null)
+            if (ApiConfig.Token != null)
             {
-                _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
-
                 SignalRInitialize();
             }
-
             _signalRService.Restart += () =>
             {
                 Console.WriteLine($"This pc is restarting...");
