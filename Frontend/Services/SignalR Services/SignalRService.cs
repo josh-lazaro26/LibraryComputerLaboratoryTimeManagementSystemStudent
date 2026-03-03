@@ -13,7 +13,7 @@ internal class SignalRService
     public event Action DisconnectUser;
     public event Action<TimeSpan> UpdatedStudentSession;  // hub: "UpdatedSession"
     public event Action Terminate;                         // hub: "Terminate"
-
+    public event Action Restart;
     public SignalRService(Func<Task<string>> tokenProvider)
     {
         _tokenProvider = tokenProvider;
@@ -56,6 +56,10 @@ internal class SignalRService
         _connection.On("Terminate", () =>
         {
             Terminate?.Invoke();
+        });
+        _connection.On("Restart", () =>
+        {
+            Restart.Invoke();
         });
 
         Console.WriteLine("SignalR handlers registered.");

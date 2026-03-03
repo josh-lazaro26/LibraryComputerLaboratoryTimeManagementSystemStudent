@@ -12,6 +12,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
         private StudentServices _studentServices;
         private bool _isProcessing = false;
 
+        private readonly SignalRService _signalRService;
         // Low-level keyboard hook
         private static IntPtr _hookId = IntPtr.Zero;
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -51,6 +52,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             // Start the keyboard hook
             _proc = HookCallback;
             _hookId = SetHook(_proc);
+
+            _signalRService.Restart += () =>
+            {
+                Console.WriteLine($"This pc is restarting...");
+            };
         }
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
