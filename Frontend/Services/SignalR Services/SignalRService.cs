@@ -10,7 +10,7 @@ internal class SignalRService
     private readonly Func<Task<string>> _tokenProvider;
 
     // Student listeners (matching hub events from image)
-    public event Action DisconnectUser;
+    public event Action<Guid> LoggedOutSession;
     public event Action<TimeSpan> UpdatedStudentSession;  // hub: "UpdatedSession"
     public event Action Terminate;                         // hub: "Terminate"
     public event Action Restart;
@@ -43,9 +43,9 @@ internal class SignalRService
 
     public void RegisterHandlers()
     {
-        _connection.On("DisconnectUser", () =>
+        _connection.On("LoggedOutSession", (Guid userId) =>
         {
-            DisconnectUser?.Invoke();  
+            LoggedOutSession.Invoke(userId);
         });
 
         _connection.On<TimeSpan>("UpdatedSession", (duration) =>
@@ -57,9 +57,10 @@ internal class SignalRService
         {
             Terminate?.Invoke();
         });
+
         _connection.On("Restart", () =>
         {
-            Restart.Invoke();
+            Restart?.Invoke();
         });
 
         Console.WriteLine("SignalR handlers registered.");

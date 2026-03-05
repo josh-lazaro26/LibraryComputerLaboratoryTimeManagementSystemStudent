@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EvaluationAnswerForm));
             this.QuestionLabel = new System.Windows.Forms.Label();
             this.LikedBtn = new System.Windows.Forms.Button();
@@ -36,6 +37,12 @@
             this.ShadedLikeBtn = new System.Windows.Forms.Button();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.SubmitBtn = new System.Windows.Forms.Button();
+            this.EvaluationFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.SubmitBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.bunifuElipse2 = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.bunifuElipse3 = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.CloseBtn = new System.Windows.Forms.Button();
+            this.HeaderPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // QuestionLabel
@@ -56,7 +63,7 @@
             this.LikedBtn.FlatAppearance.BorderSize = 0;
             this.LikedBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LikedBtn.Image = ((System.Drawing.Image)(resources.GetObject("LikedBtn.Image")));
-            this.LikedBtn.Location = new System.Drawing.Point(183, 214);
+            this.LikedBtn.Location = new System.Drawing.Point(182, 261);
             this.LikedBtn.Name = "LikedBtn";
             this.LikedBtn.Size = new System.Drawing.Size(75, 75);
             this.LikedBtn.TabIndex = 1;
@@ -69,7 +76,7 @@
             this.DislikeBtn.FlatAppearance.BorderSize = 0;
             this.DislikeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DislikeBtn.Image = ((System.Drawing.Image)(resources.GetObject("DislikeBtn.Image")));
-            this.DislikeBtn.Location = new System.Drawing.Point(389, 214);
+            this.DislikeBtn.Location = new System.Drawing.Point(388, 261);
             this.DislikeBtn.Name = "DislikeBtn";
             this.DislikeBtn.Size = new System.Drawing.Size(75, 75);
             this.DislikeBtn.TabIndex = 2;
@@ -82,7 +89,7 @@
             this.ShadedDislikeBtn.FlatAppearance.BorderSize = 0;
             this.ShadedDislikeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShadedDislikeBtn.Image = ((System.Drawing.Image)(resources.GetObject("ShadedDislikeBtn.Image")));
-            this.ShadedDislikeBtn.Location = new System.Drawing.Point(389, 214);
+            this.ShadedDislikeBtn.Location = new System.Drawing.Point(388, 261);
             this.ShadedDislikeBtn.Name = "ShadedDislikeBtn";
             this.ShadedDislikeBtn.Size = new System.Drawing.Size(75, 75);
             this.ShadedDislikeBtn.TabIndex = 3;
@@ -95,7 +102,7 @@
             this.ShadedLikeBtn.FlatAppearance.BorderSize = 0;
             this.ShadedLikeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShadedLikeBtn.Image = ((System.Drawing.Image)(resources.GetObject("ShadedLikeBtn.Image")));
-            this.ShadedLikeBtn.Location = new System.Drawing.Point(183, 214);
+            this.ShadedLikeBtn.Location = new System.Drawing.Point(182, 261);
             this.ShadedLikeBtn.Name = "ShadedLikeBtn";
             this.ShadedLikeBtn.Size = new System.Drawing.Size(75, 75);
             this.ShadedLikeBtn.TabIndex = 4;
@@ -104,6 +111,8 @@
             // 
             // HeaderPanel
             // 
+            this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(80)))), ((int)(((byte)(60)))));
+            this.HeaderPanel.Controls.Add(this.CloseBtn);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Name = "HeaderPanel";
@@ -125,6 +134,38 @@
             this.SubmitBtn.UseVisualStyleBackColor = false;
             this.SubmitBtn.Click += new System.EventHandler(this.SubmitBtn_Click);
             // 
+            // EvaluationFormElipse
+            // 
+            this.EvaluationFormElipse.ElipseRadius = 20;
+            this.EvaluationFormElipse.TargetControl = this;
+            // 
+            // SubmitBtnElipse
+            // 
+            this.SubmitBtnElipse.ElipseRadius = 5;
+            this.SubmitBtnElipse.TargetControl = this.SubmitBtn;
+            // 
+            // bunifuElipse2
+            // 
+            this.bunifuElipse2.ElipseRadius = 20;
+            this.bunifuElipse2.TargetControl = this;
+            // 
+            // bunifuElipse3
+            // 
+            this.bunifuElipse3.ElipseRadius = 20;
+            this.bunifuElipse3.TargetControl = this;
+            // 
+            // CloseBtn
+            // 
+            this.CloseBtn.FlatAppearance.BorderSize = 0;
+            this.CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseBtn.Image = ((System.Drawing.Image)(resources.GetObject("CloseBtn.Image")));
+            this.CloseBtn.Location = new System.Drawing.Point(600, 1);
+            this.CloseBtn.Name = "CloseBtn";
+            this.CloseBtn.Size = new System.Drawing.Size(46, 56);
+            this.CloseBtn.TabIndex = 29;
+            this.CloseBtn.UseVisualStyleBackColor = true;
+            this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
+            // 
             // EvaluationAnswerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
@@ -143,6 +184,7 @@
             this.Margin = new System.Windows.Forms.Padding(7);
             this.Name = "EvaluationAnswerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.HeaderPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -156,5 +198,10 @@
         private System.Windows.Forms.Button ShadedLikeBtn;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.Button SubmitBtn;
+        private Bunifu.Framework.UI.BunifuElipse EvaluationFormElipse;
+        private Bunifu.Framework.UI.BunifuElipse SubmitBtnElipse;
+        private Bunifu.Framework.UI.BunifuElipse bunifuElipse2;
+        private Bunifu.Framework.UI.BunifuElipse bunifuElipse3;
+        public System.Windows.Forms.Button CloseBtn;
     }
 }

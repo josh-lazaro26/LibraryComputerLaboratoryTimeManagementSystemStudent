@@ -16,6 +16,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             InitializeComponent();
             _studentServices = new StudentServices();
             this.Load += EvaluationAnswerForm_Load;
+
+            DisableButtonHover(LikedBtn);
+            DisableButtonHover(ShadedLikeBtn);
+            DisableButtonHover(DislikeBtn);
+            DisableButtonHover(ShadedDislikeBtn);
         }
 
         private async void EvaluationAnswerForm_Load(object sender, EventArgs e)
@@ -48,19 +53,12 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             }
         }
 
-
-        /// <summary>
-        /// Shows ShadedLikeBtn when selected, LikedBtn when not selected.
-        /// </summary>
         private void SetLikeSelected(bool selected)
         {
             LikedBtn.Visible = !selected;
             ShadedLikeBtn.Visible = selected;
         }
 
-        /// <summary>
-        /// Shows ShadedDislikeBtn when selected, DislikeBtn when not selected.
-        /// </summary>
         private void SetDislikeSelected(bool selected)
         {
             DislikeBtn.Visible = !selected;
@@ -112,7 +110,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                 SubmitBtn.Enabled = true;
             }
         }
-
+        private void DisableButtonHover(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = btn.BackColor;
+            btn.FlatAppearance.MouseDownBackColor = btn.BackColor;
+        }
         private void ShadedDislikeBtn_Click(object sender, EventArgs e)
         {
             _selectedEvaluationType = null;
@@ -139,6 +143,13 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             _selectedEvaluationType = "Disliked";
             SetLikeSelected(false);
             SetDislikeSelected(true);
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            var ScanRfidForm = new ScanRfidForm();
+            ScanRfidForm.Show();
+            this.Close();
         }
     }
 }

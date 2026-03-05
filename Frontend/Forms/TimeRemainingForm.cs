@@ -38,9 +38,9 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
             SignalRInitialize();
 
-            _signalRService.DisconnectUser += () =>
+            _signalRService.LoggedOutSession += (Guid userId) =>
             {
-                Console.WriteLine("This user is disconnected.");
+                Console.WriteLine($"This user is disconnected. {userId}");
                 //PcLocker.LockWorkStation();
             };
 

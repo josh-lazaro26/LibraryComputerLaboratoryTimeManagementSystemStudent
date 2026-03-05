@@ -45,7 +45,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             InitializeComponent();
             _studentServices = new StudentServices();
             this.FormBorderStyle = FormBorderStyle.None;
-            //this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
             this.TopMost = true;
             this.FormClosing += ScanRfidForm_FormClosing;
             this.Shown += (s, e) => RFIDTextBox.Focus();
@@ -60,10 +60,6 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             {
                 SignalRInitialize();
             }
-            _signalRService.Restart += () =>
-            {
-                Console.WriteLine($"This pc is restarting...");
-            };
         }
         private void SignalRInitialize()
         {
@@ -71,6 +67,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             {
                 _ = _signalRService.InitializeAsync();
                 Console.WriteLine("signalR initialized");
+
             }
             catch (Exception ex)
             {
@@ -110,7 +107,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             if (e.KeyCode != Keys.Enter) return;   // only on Enter
             if (_isProcessing) return;             // already handling a scan
 
-            if (RFIDTextBox.Text?.Trim() == "253515")
+            if (RFIDTextBox.Text?.Trim() == "1010")
             {
                 RFIDTextBox.Clear();
                 UnhookWindowsHookEx(_hookId);  // Release keyboard hook first
@@ -185,10 +182,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
         private void ScanRfidForm_Load(object sender, EventArgs e)
         {
-            //var screen = Screen.PrimaryScreen;
-            //ResponsiveLayout.Initialize(screen);
+            var screen = Screen.PrimaryScreen;
+            ResponsiveLayout.Initialize(screen);
 
-            //ApplyResponsiveLayout(screen);
+            ApplyResponsiveLayout(screen);
         }
 
         private void ApplyResponsiveLayout(Screen screen)
