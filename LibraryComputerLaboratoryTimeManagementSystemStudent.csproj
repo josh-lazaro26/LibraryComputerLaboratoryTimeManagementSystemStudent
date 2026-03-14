@@ -234,6 +234,7 @@
     <Compile Include="Frontend\Services\ApiConfig\ApiConfig.cs" />
     <Compile Include="Frontend\Services\Lock-Restart\PcLocker.cs" />
     <Compile Include="Frontend\Services\SignalR Services\SignalRService.cs" />
+    <Compile Include="Frontend\Services\SignalR Services\UnauthenticatedSignalR.cs" />
     <Compile Include="Frontend\Services\StudentServices\StudentServices.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

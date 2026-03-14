@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeRemainingForm));
             this.SchoolIdLabel = new System.Windows.Forms.Label();
             this.CurrentDateLabel = new System.Windows.Forms.Label();
             this.StudentTimeLabel = new System.Windows.Forms.Label();
             this.TerminateSessionBtn = new System.Windows.Forms.Button();
             this.TimeRemainingFormElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.TerminateSessionBtnElipse = new Bunifu.Framework.UI.BunifuElipse(this.components);
+            this.MinimizeBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SchoolIdLabel
@@ -95,12 +97,25 @@
             this.TerminateSessionBtnElipse.ElipseRadius = 5;
             this.TerminateSessionBtnElipse.TargetControl = this.TerminateSessionBtn;
             // 
+            // MinimizeBtn
+            // 
+            this.MinimizeBtn.FlatAppearance.BorderSize = 0;
+            this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MinimizeBtn.Image = ((System.Drawing.Image)(resources.GetObject("MinimizeBtn.Image")));
+            this.MinimizeBtn.Location = new System.Drawing.Point(358, 2);
+            this.MinimizeBtn.Name = "MinimizeBtn";
+            this.MinimizeBtn.Size = new System.Drawing.Size(37, 43);
+            this.MinimizeBtn.TabIndex = 30;
+            this.MinimizeBtn.UseVisualStyleBackColor = true;
+            this.MinimizeBtn.Click += new System.EventHandler(this.MinimizeBtn_Click);
+            // 
             // TimeRemainingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(64)))), ((int)(((byte)(43)))));
             this.ClientSize = new System.Drawing.Size(400, 250);
+            this.Controls.Add(this.MinimizeBtn);
             this.Controls.Add(this.TerminateSessionBtn);
             this.Controls.Add(this.StudentTimeLabel);
             this.Controls.Add(this.CurrentDateLabel);
@@ -121,5 +136,6 @@
         private System.Windows.Forms.Button TerminateSessionBtn;
         private Bunifu.Framework.UI.BunifuElipse TimeRemainingFormElipse;
         private Bunifu.Framework.UI.BunifuElipse TerminateSessionBtnElipse;
+        public System.Windows.Forms.Button MinimizeBtn;
     }
 }

@@ -1,6 +1,8 @@
 ﻿using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Models.StudentDao;
 using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services;
+using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.SignalR_Services;
 using LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Services.StudentServices;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -15,6 +17,7 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
         private bool _isProcessing = false;
 
         private readonly SignalRService _signalRService;
+        private readonly UnauthenticatedSignalR _unauthSignalR;
         // Low-level keyboard hook
         private static IntPtr _hookId = IntPtr.Zero;
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -45,22 +48,32 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             InitializeComponent();
             _studentServices = new StudentServices();
             this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.TopMost = true;
+            //this.WindowState = FormWindowState.Maximized;
+            //this.TopMost = true;
             this.FormClosing += ScanRfidForm_FormClosing;
             this.Shown += (s, e) => RFIDTextBox.Focus();
             RFIDTextBox.KeyDown += RFIDTextBox_KeyDown;
 
             // Start the keyboard hook
-            _proc = HookCallback;
-            _hookId = SetHook(_proc);
+            //_proc = HookCallback;
+            //_hookId = SetHook(_proc);
             _signalRService = new SignalRService(() => Task.FromResult(ApiConfig.Token));
+
+            _unauthSignalR = new UnauthenticatedSignalR();
+            _unauthSignalR.Restart += () =>
+            {
+                Console.WriteLine("Restart triggered on ScanRfidForm.");
+                //Environment.Exit(0); // or System.Diagnostics.Process.Start("shutdown", "/r /t 0");
+            };
+            _ = _unauthSignalR.InitializeAsync();
 
             if (ApiConfig.Token != null)
             {
                 SignalRInitialize();
             }
+
         }
+
         private void SignalRInitialize()
         {
             try
@@ -70,10 +83,11 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
             }
             catch (Exception ex)
-            {
+            {   
                 Console.WriteLine(ex.ToString());
             }
         }
+
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (var curProcess = System.Diagnostics.Process.GetCurrentProcess())
@@ -102,6 +116,19 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             return CallNextHookEx(_hookId, nCode, wParam, lParam);
         }
 
+        /// <summary>
+        /// Releases the low-level keyboard hook, re-enabling all previously blocked keys
+        /// (Win key, Alt+Tab, Alt+F4). Call this before navigating away from this form.
+        /// </summary>
+        private void ReleaseKeyboardHook()
+        {
+            if (_hookId != IntPtr.Zero)
+            {
+                UnhookWindowsHookEx(_hookId);
+                _hookId = IntPtr.Zero;
+            }
+        }
+
         private async void RFIDTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter) return;   // only on Enter
@@ -110,9 +137,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             if (RFIDTextBox.Text?.Trim() == "1010")
             {
                 RFIDTextBox.Clear();
-                UnhookWindowsHookEx(_hookId);  // Release keyboard hook first
-                _hookId = IntPtr.Zero;
-                Application.Exit();            // Close the entire application
+                ReleaseKeyboardHook();  // Release keyboard hook first
+                Application.Exit();    // Close the entire application
                 return;
             }
 
@@ -146,6 +172,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
                         RFIDTextBox.Clear();
                         return;
                     }
+
+                    // Re-enable all blocked keys (Win, Alt+Tab, Alt+F4) now that the
+                    // student is authenticated and leaving this lock-screen form.
+                    ReleaseKeyboardHook();
 
                     var TRForm = new TimeRemainingForm();
                     TRForm.FormClosed += (_, __) => this.Close();
@@ -182,10 +212,10 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
         private void ScanRfidForm_Load(object sender, EventArgs e)
         {
-            var screen = Screen.PrimaryScreen;
-            ResponsiveLayout.Initialize(screen);
+            //var screen = Screen.PrimaryScreen;
+            //ResponsiveLayout.Initialize(screen);
 
-            ApplyResponsiveLayout(screen);
+            //ApplyResponsiveLayout(screen);
         }
 
         private void ApplyResponsiveLayout(Screen screen)
@@ -209,8 +239,8 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
 
             NDTCLibraryPb.Size = ResponsiveLayout.ScaleSize(300, 300);
             NDTCLibraryPb.Location = new Point(
-                HeaderLabel.Left - NDTCLibraryPb.Width + 20, 
-                HeaderLabel.Top + (HeaderLabel.Height / 2) - (NDTCLibraryPb.Height / 2) 
+                HeaderLabel.Left - NDTCLibraryPb.Width + 20,
+                HeaderLabel.Top + (HeaderLabel.Height / 2) - (NDTCLibraryPb.Height / 2)
             );
             NDTCLibraryPb.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -218,24 +248,20 @@ namespace LibraryComputerLaboratoryTimeManagementSystemStudent.Frontend.Forms
             RFIDTextBox.Size = ResponsiveLayout.ScaleSize(400, 45);
             RFIDTextBox.Location = new Point(
                 ResponsiveLayout.CenterHorizontal(screenWidth, RFIDTextBox.Width) + 60,
-                ResponsiveLayout.ScaleLocation(0, 600).Y //420
+                ResponsiveLayout.ScaleLocation(0, 600).Y
             );
         }
 
         private void ScanRfidForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                return;
-            }
+            //if (e.CloseReason == CloseReason.UserClosing)
+            //{
+            //    e.Cancel = true;
+            //    return;
+            //}
 
-            // Unhook when form actually closes
-            if (_hookId != IntPtr.Zero)
-            {
-                UnhookWindowsHookEx(_hookId);
-                _hookId = IntPtr.Zero;
-            }
+            //// Unhook when form actually closes
+            //ReleaseKeyboardHook();
         }
     }
 }
